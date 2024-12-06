@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Downloader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #loadingMessage {
+            display: none;
+            text-align: center;
+            color: #4CAF50;
+            font-size: 18px;
+        }
+        #errorMessage {
+            display: none;
+            text-align: center;
+            color: red;
+            font-size: 18px;
+        }
+        #successMessage {
+            display: none;
+            text-align: center;
+            color: green;
+            font-size: 18px;
+        }
+        #downloadFrame {
+            display: none;
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube Video Downloader</h1>
+    <input type="text" id="videoURL" placeholder="Enter YouTube video URL">
+    <button onclick="downloadVideo()">Download</button>
+    
+    <div id="loadingMessage">Please wait, processing...</div>
+    <div id="successMessage">Video is ready to download!</div>
+    <div id="errorMessage">Something went wrong. Please try again.</div>
+
+    <iframe id="downloadFrame" src="" frameborder="0" hidden></iframe>
+
+    <script>
+        function downloadVideo() {
+            const videoURL = document.getElementById('videoURL').value;
+            const loadingMessage = document.getElementById('loadingMessage');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const downloadFrame = document.getElementById('downloadFrame');
+
+            // Show the loading message
+            loadingMessage.style.display = "block";
+            successMessage.style.display = "none";
+            errorMessage.style.display = "none";
+            downloadFrame.style.display = "none";
+            
+            // Improved RegEx to validate YouTube video URL
+            const youtubeRegex = /^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|embed\/|v\/|e\/|u\/\w\/)([a-zA-Z0-9_-]{11})$/;
+            
+            // Check if the URL is valid
+            if (videoURL && youtubeRegex.test(videoURL)) {
+                // Simulate the download process
+                setTimeout(function() {
+                    loadingMessage.style.display = "none";
+                    successMessage.style.display = "block";
+                    downloadFrame.style.display = "block";
+                    
+                    // Extract video ID and generate the iframe source link
+                    const videoID = videoURL.split('v=')[1].split('&')[0];
+                    downloadFrame.src = `https://www.ssyoutube.com/watch?v=${videoID}`;
+                }, 3000);  // Simulate 3-second delay
+            } else {
+                loadingMessage.style.display = "none";
+                errorMessage.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
